@@ -1,0 +1,88 @@
+GET /reports/weekly/{year}/{weekNum}
+
+週報一覧の取得
+
+[
+    {
+        year: 2016,
+        week: 51,
+        user: {
+            user_id: [GUID],
+            name: '川口　啓',            
+            groups: [
+                {
+                    group_id: [GUID],
+                    name: 'IT PLAN',
+                }
+            ]
+        },
+        data: [
+            {"業務内容", ""},
+            {"進捗状況", ""},
+            {"問題点・改善点", ""},
+            {"来週の予定", ""},
+            {"提案・要望", ""},
+        ]
+    },
+    {
+        year: 2016,
+        week: 51,
+        user: {
+            user_id: [GUID],
+            name: '川口　啓',            
+            groups: [
+                {
+                    group_id: [GUID],
+                    name: 'IT PLAN',
+                }
+            ]
+        },
+        data: [
+            {"業務内容", ""},
+            {"進捗状況", ""},
+            {"問題点・改善点", ""},
+            {"来週の予定", ""},
+            {"提案・要望", ""},
+        ]
+    }
+]
+
+GET /reports/weekly/{year}/{weekNum}/{uid}
+
+週報(特定ユーザー)
+
+{
+    year: 2016,
+    week: 51,
+    user: {
+        user_id: [GUID],
+        name: '川口　啓',            
+        groups: [
+            {
+                group_id: [GUID],
+                name: 'IT PLAN',
+            }
+        ]
+    },
+    data: [
+        {"業務内容", ""},
+        {"進捗状況", ""},
+        {"問題点・改善点", ""},
+        {"来週の予定", ""},
+        {"提案・要望", ""},
+    ]
+}
+
+PUT /reports/weekly/{year}/{weekNum}/{uid}
+
+週報登録
+
+{
+    data: [
+        {"業務内容", ""},
+        {"進捗状況", ""},
+        {"問題点・改善点", ""},
+        {"来週の予定", ""},
+        {"提案・要望", ""},
+    ]
+}

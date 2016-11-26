@@ -1,0 +1,73 @@
+GET /users/
+
+ユーザー一覧
+
+[
+    {
+        user_id: [GUID],
+        name: '川口　啓',            
+        groups: [
+            {
+                group_id: [GUID],
+                name: 'IT PLAN',
+            }
+        ]
+    },
+    {
+        user_id: [GUID],
+        name: '川口　啓',            
+        groups: [
+            {
+                group_id: [GUID],
+                name: 'IT PLAN',
+            }
+        ]
+    }
+]
+
+POST /user/
+
+ユーザー情報取得新規登録
+
+{
+    name: '川口　啓',            
+    groups: [
+        {
+            group_id: [GUID],
+            name: 'IT PLAN',
+        }
+    ]
+}
+
+GET /user/{user_id}
+
+ユーザー情報取得
+
+{
+    user_id: [GUID],
+    name: '川口　啓',            
+    groups: [
+        {
+            group_id: [GUID],
+            name: 'IT PLAN',
+        }
+    ]
+}
+
+PUT /user/{user_id}
+
+ユーザー情報更新
+
+{
+    name: '川口　啓',            
+    groups: [
+        {
+            group_id: [GUID],
+            name: 'IT PLAN',
+        }
+    ]
+}
+
+DELETE /user/{user_id}
+
+ユーザー情報削除
