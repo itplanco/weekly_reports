@@ -4,7 +4,9 @@ class JsonView {
     public $model;
     
     function __construct($model) {
-        $this->model = $model;
+        if (isset($model)) {
+            $this->model = $model;
+        }
     }
     
     function render() {

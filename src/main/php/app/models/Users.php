@@ -9,29 +9,32 @@ class UsersService {
     }
     
     function nextId() {
-        $user = $this->db->getSingleResult("SELECT MAX(user_id) user_id FROM users");
-        return $user['user_id'];
+        return uniqid();
     }
     
     function findAll() {
-        return $this->db->getArrayResult("SELECT * FROM users");
+        $users = $this->db->getArrayResult("SELECT * FROM users");
+        foreach ($users as $user) {
+            $result[] = json_decode($user['json']);
+        }
+        return $result;
     }
     
     function findById($id) {
-        return $this->db->getSingleResult("SELECT * FROM users WHERE user_id = ?", $id);
+        $user = $this->db->getSingleResult("SELECT * FROM users WHERE user_id = ?", $id);
+        return json_decode($user['json']);
     }
     
     function insert($data) {
+        // ユーザーIDを退避
+        $id = $data['user_id'];
+
         // パスワードを退避
         $password = $data['password'];
         unset($data['password']);
         
-        // 新規IDを採番
-        $id = $this->nextId();
-        $data['user_id'] = $id;
-        
         // DBに登録
-        $result = $this->db->executeQuery("INSERT INTO users (user_id, password, json) values (?, ?, ?)", $id, $password, json_encode($data));
+        $result = $this->db->executeQuery("INSERT INTO users (user_id, name, password, json) values (?, ?, ?, ?)", $id, $data['name'], $password, json_encode($data));
         if ($result === FALSE) {
             throw new Exception();
         }

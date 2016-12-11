@@ -25,25 +25,25 @@ class UsersController extends Controller {
             return $this->notFound();
         }
 
-        return ok($result);
+        return $this->ok($result);
     }
     
     /**
     * ユーザーを登録する
     */
     function post($data) {
-        $id = $data['user_id'];
-        if ($id) {
+        if (isset($data['user_id'])) {
             return $this->badRequest("新規登録時にはIDを指定しないでください。");
         }
 
-        $password = $data['password'];
-        if (!$password) {
+        if (!isset($data['password'])) {
             return $this->badRequest("新規登録時にはパスワードを必ず指定してください。");
         }
 
+        //IDを新規に採番
+        $data['user_id'] = $this->service->nextId();
         $this->service->insert($data);
         
-        return ok();
+        return $this->ok();
     }
 }

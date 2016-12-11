@@ -15,33 +15,35 @@ class Db {
         $this->db->close();
     }
     
-    function getArrayResult($sql, $param) {
+    function getArrayResult($sql, ...$param) {
         $sql_result = $this->executePreparedStatement($sql, $param);
-        $result=array();
-        while($data=$sql_result->fetchArray()) {
-            $result[] = json_decode($data["json"]);
+        $result = array();
+        while($data=$sql_result->fetchArray(PDO::FETCH_OBJ)) {
+            $result[] = $data;
         }
         return $result;
     }
     
-    function getSingleResult($sql, $param) {
+    function getSingleResult($sql, ...$param) {
         $sql_result = $this->executePreparedStatement($sql, $param);
         while($data=$sql_result->fetchArray()) {
-            return json_decode($data["json"]);
+            return $data;
         }
     }
     
-    function executeQuery($sql, $param) {
+    function executeQuery($sql, ...$param) {
         return $this->executePreparedStatement($sql, $param);
     }
     
     private function executePreparedStatement($sql, $param) {
         $statement = $this->db->prepare($sql);
         if ($param) {
-            foreach ($param as $key => $value) {
-                $statement->bindValue($key, $value);
+            $index = 1;
+            foreach ($param as $value) {
+                $statement->bindValue($index, $value);
+                $index++;
             }
         }
-        return $sql_result = $statement->execute();
+        return $statement->execute();
     }
 }

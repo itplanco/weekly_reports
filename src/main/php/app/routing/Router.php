@@ -19,16 +19,24 @@ class Router {
                 
                 // アクションを決定
                 $left = str_replace($p, "", $path);
-                if ($left === "" || $left === "/") {
+                if ($_SERVER["REQUEST_METHOD"] === "GET" && ($left === "" || $left === "/")) {
                     $route->action = "index";
                 } else {
                     $route->action = strtolower($_SERVER["REQUEST_METHOD"]);
-                    $route->param = explode("/", substr($left, 1));
+                    $left = substr($left, 1);
+                    if ($left) {
+                        $route->param = explode("/", $left);
+                    } else {
+                        $route->param = array();
+                    }
                 }
                 
-                // PUT、POSTの場合には内容データも取得
+                // PUT、POSTの場合eには内容データも取得
                 if ($_SERVER["REQUEST_METHOD"] === "POST" || $_SERVER["REQUEST_METHOD"] === "PUT") {
-                    $route->param[] = $_POST;
+                    foreach($_POST as $key => $value) { 
+                        $data[$key] = $value;
+                    }
+                    $route->param[] = $data;
                 } else {
                     parse_str(parse_url($_SERVER["REQUEST_URI"], PHP_URL_QUERY), $data);
                     $route->param[] = $data;
