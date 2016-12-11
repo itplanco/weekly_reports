@@ -1,6 +1,6 @@
 
 <?php
-class UsersController extends Controller {
+class UsersApiController extends Controller {
     private $service;
     
     function __construct() {
@@ -32,11 +32,11 @@ class UsersController extends Controller {
     * ユーザーを登録する
     */
     function post($data) {
-        if (isset($data['user_id'])) {
+        if (isset($data['user_id']) && $data['user_id']) {
             return $this->badRequest("新規登録時にはIDを指定しないでください。");
         }
 
-        if (!isset($data['password'])) {
+        if (!isset($data['password']) || !$data['password']) {
             return $this->badRequest("新規登録時にはパスワードを必ず指定してください。");
         }
 

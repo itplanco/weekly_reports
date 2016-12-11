@@ -2,25 +2,26 @@
 
 class Controller {
 
+    public $route;
+
     function ok($model) {
-        if ($model === NULL) {
+        if ($this->route->viewType === "json" && !isset($model)) {
             header("HTTP/1.1 204 No Content");
-            return new JsonView();
+            return;
         }
-        return new JsonView($model);
+        return $model;
     }
 
     function badRequest($message) {
-        header("HTTP/1.1 400 badRequest");
+        header("HTTP/1.1 400 Bad Request");
         if ($message === NULL) {
-            return new JsonView();
+            return;
         }
 
-        return new JsonView(array("error" => $message));
+        return array("error" => $message);
     }
 
     function notFound() {
         header("HTTP/1.1 404 Not Found");
-        return new JsonView();
     }
 }

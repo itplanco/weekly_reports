@@ -4,18 +4,31 @@
 require(__DIR__ . "/routing/Router.php");
 require(__DIR__ . "/routing/Route.php");
 require(__DIR__ . "/controllers/Controller.php");
-require(__DIR__ . "/controllers/UsersController.php");
-require(__DIR__ . "/controllers/ReportsController.php");
+require(__DIR__ . "/controllers/AuthorizeController.php");
+require(__DIR__ . "/controllers/UsersApiController.php");
+require(__DIR__ . "/controllers/ReportsApiController.php");
 require(__DIR__ . "/models/Models.php");
 require(__DIR__ . "/models/Users.php");
 require(__DIR__ . "/models/Reports.php");
 require(__DIR__ . "/services/AuthService.php");
-require(__DIR__ . "/views/JsonView.php");
 
 // ルーティング設定
 $routes = array(
-    "/api/users" => "UsersController",
-    "/api/reports" => "ReportsController"
+    "/authorize" => array(
+        "viewType" => "php",
+        "controller" => "AuthorizeController",
+        "action" => "index"
+    ),
+    "/api/users" => array(
+        "viewType" => "json",
+        "controller" => "UsersApiController",
+        "action" => "index"
+    ),
+    "/api/reports" => array(
+        "viewType" => "json",
+        "controller" => "ReportsApiController",
+        "action" => "index"
+    )
 );
 
 try {
@@ -33,15 +46,19 @@ try {
         throw new AuthenticationException();
     }
     
-    $view = $route->executeControllerAction();
-    $view->render();
-    
+    $model = $route->executeControllerAction();
 } catch (Error $e) {
     header("HTTP/1.1 500 Internal Server Error");
-    $view = new JsonView(array("error" => $e->getMessage()));
-    $view->render();
+    $model = array("error" => $e->getMessage());
 } catch (Exception $e) {
     header("HTTP/1.1 500 Internal Server Error");
-    $view = new JsonView(array("error" => $e->getMessage()));
-    $view->render();
+    $model = array("error" => $e->getMessage());
+}
+
+if (!isset($route)) {
+    include(__DIR__ . "/views/Error.php");
+} else if($route->viewType === "json") {
+    include(__DIR__ . "/views/JsonView.php");
+} else {
+    include(__DIR__ . "/views/" . str_replace("controller", "", strtolower($route->controller)) . "/" . $route->action . ".php");
 }

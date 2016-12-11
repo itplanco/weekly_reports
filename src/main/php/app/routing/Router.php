@@ -2,10 +2,10 @@
 
 class Router {
     
-    private $pathArray;
+    private $routes;
     
     function __construct($routes) {
-        $this->pathArray = $routes;
+        $this->routes = $routes;
     }
     
     function route() {
@@ -13,14 +13,15 @@ class Router {
         $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         
         // パスからコントローラを指定
-        foreach ($this->pathArray as $p => $c) {
+        foreach ($this->routes as $p => $c) {
             if (preg_match('#' . $p . '#', $path, $matches) === 1) {
-                $route->controller = new $c;
+                $route->controller = $c['controller'];
+                $route->viewType = $c['viewType'];
                 
                 // アクションを決定
                 $left = str_replace($p, "", $path);
                 if ($_SERVER["REQUEST_METHOD"] === "GET" && ($left === "" || $left === "/")) {
-                    $route->action = "index";
+                    $route->action = $c['action'];
                 } else {
                     $route->action = strtolower($_SERVER["REQUEST_METHOD"]);
                     $left = substr($left, 1);
@@ -41,7 +42,6 @@ class Router {
                     parse_str(parse_url($_SERVER["REQUEST_URI"], PHP_URL_QUERY), $data);
                     $route->param[] = $data;
                 }
-                
                 return $route;
             }
         }
