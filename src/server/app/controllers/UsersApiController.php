@@ -1,5 +1,6 @@
 
 <?php
+
 class UsersApiController extends Controller {
     private $service;
     
