@@ -5,7 +5,7 @@ class UsersApiController extends Controller {
     private $service;
     
     function __construct() {
-        $this->service = new UsersService();
+        $this->service = new UsersService(Db::getInstance());
     }
     
     /**
