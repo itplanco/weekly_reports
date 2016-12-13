@@ -8,7 +8,7 @@ class Db {
     }
     
     function __construct() {
-        $this->db = new SQLite3('../db/weekly_reports.sqlite3');
+        $this->db = new SQLite3(__DIR__ . '/../../db/weekly_reports.sqlite3');
     }
     
     function __destruct() {
