@@ -1,19 +1,7 @@
 <?php
 
 // 使用するリソースを読み込む
-require(__DIR__ . "/routing/Request.php");
-require(__DIR__ . "/routing/Router.php");
-require(__DIR__ . "/routing/Route.php");
-require(__DIR__ . "/controllers/Controller.php");
-require(__DIR__ . "/controllers/AuthorizeController.php");
-require(__DIR__ . "/controllers/UsersApiController.php");
-require(__DIR__ . "/controllers/ReportsApiController.php");
-require(__DIR__ . "/models/Models.php");
-require(__DIR__ . "/models/Users.php");
-require(__DIR__ . "/models/Reports.php");
-require(__DIR__ . "/services/AuthService.php");
-require(__DIR__ . "/services/UsersService.php");
-require(__DIR__ . "/services/ReportsService.php");
+require(__DIR__ . "/autoload.php");
 
 // ルーティング設定
 $routes = array(
