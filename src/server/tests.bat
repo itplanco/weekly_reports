@@ -1,0 +1,1 @@
+bin\phpunit --bootstrap app\autoload.php tests

@@ -1,1 +1,1 @@
-@php "%~dp0phpunit-5.7.3.phar"
+@php "%~dp0phpunit-5.7.3.phar" %*
