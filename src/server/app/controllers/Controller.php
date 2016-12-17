@@ -4,21 +4,18 @@ class Controller {
 
     public $route;
 
+    function noContent() {
+        header("HTTP/1.1 204 No Content");
+        return;
+    }
+
     function ok($model) {
-        if ($this->route->viewType === "json" && !isset($model)) {
-            header("HTTP/1.1 204 No Content");
-            return;
-        }
         return $model;
     }
 
     function badRequest($message) {
         header("HTTP/1.1 400 Bad Request");
-        if ($message === NULL) {
-            return;
-        }
-
-        return array("error" => $message);
+        return ["error" => $message];
     }
 
     function notFound() {
