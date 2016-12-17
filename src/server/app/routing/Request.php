@@ -1,16 +1,16 @@
 <?php
 
 class Request {
-    public $requestUri;
-    public $requestMethod;
-    public $requestBody;
+    public $uri;
+    public $method;
+    public $body;
 
     function __construct() {
-        $this->requestUri = $_SERVER["REQUEST_URI"];
-        $this->requestMethod = $_SERVER["REQUEST_METHOD"];
-        $this->requestBody = [];
+        $this->uri = $_SERVER["REQUEST_URI"];
+        $this->method = $_SERVER["REQUEST_METHOD"];
+        $this->body = [];
         foreach($_POST as $key => $value) { 
-            $this->requestBody[$key] = $value;
+            $this->body[$key] = $value;
         }
     }
 }

@@ -5,21 +5,50 @@ require(__DIR__ . "/autoload.php");
 
 // ルーティング設定
 $routes = array(
-    "/authorize" => array(
+    "/authorize" => [
         "viewType" => "php",
         "controller" => "AuthorizeController",
         "action" => "index"
-    ),
-    "/api/users" => array(
+    ],
+    "/api/users/:id" => [
         "viewType" => "json",
         "controller" => "UsersApiController",
         "action" => "index"
-    ),
-    "/api/reports" => array(
+    ],
+    "/api/users" => [
+        "viewType" => "json",
+        "controller" => "UsersApiController",
+        "action" => "index"
+    ],
+    "/api/reports/:year/:weekNum/:id/comments" => [
+        "viewType" => "json",
+        "controller" => "ReportCommentsApiController",
+        "action" => "index"
+    ],
+    "/api/reports/:year/:weekNum/:id" => [
         "viewType" => "json",
         "controller" => "ReportsApiController",
         "action" => "index"
-    )
+    ],
+    "/api/reports/:year/:weekNum" => [
+        "viewType" => "json",
+        "controller" => "WeeklyReportsApiController",
+        "action" => "index"
+    ],
+    "/api/reports/byuser/:id/latest" => [
+        "viewType" => "json",
+        "controller" => "ReportsByUserApiController",
+        "action" => "index",
+        "param" => [
+            "year" => 2016,
+            "weekNum" => 53,
+        ]
+    ],
+    "/api/reports/byuser/:id/from/:year/:weekNum" => [
+        "viewType" => "json",
+        "controller" => "ReportsByUserApiController",
+        "action" => "index"
+    ],
 );
 
 try {

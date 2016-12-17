@@ -1,6 +1,6 @@
 <?php
 
-class ReportsApiController extends Controller {
+class WeeklyReportsApiController extends Controller {
 
     function index() {
         return $this->ok();

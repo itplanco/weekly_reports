@@ -1,18 +1,21 @@
-
 <?php
 
 class UsersApiController extends Controller {
-    private $service;
+    private $repository;
     
-    function __construct() {
-        $this->service = new UsersService(Db::getInstance());
+    function __construct($repository) {
+        if (isset($repository)) {
+            $this->repository = $repository;
+        } else {
+            $this->repository = new UsersRepository(Db::getInstance());
+        }
     }
     
     /**
     * ユーザー一覧を取得する
     */
     function index() {
-        $result = $this->service->findAll();
+        $result = $this->repository->findAll();
         return $this->ok($result);
     }
     
@@ -20,7 +23,7 @@ class UsersApiController extends Controller {
     * 指定IDのユーザーを取得する
     */
     function get($id) {
-        $result = $this->service->findById($id);
+        $result = $this->repository->findById($id);
         
         if (!$result) {
             return $this->notFound();
@@ -30,21 +33,50 @@ class UsersApiController extends Controller {
     }
     
     /**
-    * ユーザーを登録する
-    */
+     * ユーザーを登録する
+     */
     function post($data) {
         if (isset($data['user_id']) && $data['user_id']) {
             return $this->badRequest("新規登録時にはIDを指定しないでください。");
         }
 
-        if (!isset($data['password']) || !$data['password']) {
-            return $this->badRequest("新規登録時にはパスワードを必ず指定してください。");
+        if (!isset($data['name'])) {
+            return $this->badRequest("名前は必ず指定してください。");
         }
 
         //IDを新規に採番
-        $data['user_id'] = $this->service->nextId();
-        $this->service->insert($data);
+        $data['user_id'] = $this->repository->nextId();
+        $this->repository->insert($data);
         
+        return $this->ok();
+    }
+    
+    /**
+     * ユーザーを更新する
+     */
+    function put($id, $data) {
+        $result = $this->repository->findById($id);
+        if (!$result) {
+            // ユーザーが存在しない場合
+            return $this->notFound();
+        }
+
+        $data['user_id'] = $id;
+        $this->repository->update($data);
+        return $this->ok();
+    }
+    
+    /**
+     * ユーザーを削除する
+     */
+    function delete($id) {
+        $result = $this->repository->findById($id);
+        if (!$result) {
+            // ユーザーが存在しない場合
+            return $this->notFound();
+        }
+
+        $this->repository->delete($id);
         return $this->ok();
     }
 }

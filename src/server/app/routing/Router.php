@@ -10,7 +10,7 @@ class Router {
     
     function route($request) {
         $route = new Route();
-        $path = parse_url($request->requestUri, PHP_URL_PATH);
+        $path = parse_url($request->uri, PHP_URL_PATH);
         
         // パスからコントローラを指定
         foreach ($this->routes as $p => $c) {
@@ -20,10 +20,10 @@ class Router {
                 
                 // アクションを決定
                 $left = str_replace($p, "", $path);
-                if ($request->requestMethod === "GET" && ($left === "" || $left === "/")) {
+                if ($request->method === "GET" && ($left === "" || $left === "/")) {
                     $route->action = $c['action'];
                 } else {
-                    $route->action = strtolower($request->requestMethod);
+                    $route->action = strtolower($request->method);
                     $left = substr($left, 1);
                     if ($left) {
                         $route->param = explode("/", $left);
@@ -33,10 +33,10 @@ class Router {
                 }
                 
                 // PUT、POSTの場合eには内容データも取得
-                if ($request->requestMethod === "POST" || $request->requestMethod === "PUT") {
+                if ($request->method === "POST" || $request->method === "PUT") {
                     $route->param[] = $request->body;
                 } else {
-                    parse_str(parse_url($request->requestUri, PHP_URL_QUERY), $data);
+                    parse_str(parse_url($request->uri, PHP_URL_QUERY), $data);
                     $route->param[] = $data;
                 }
                 return $route;

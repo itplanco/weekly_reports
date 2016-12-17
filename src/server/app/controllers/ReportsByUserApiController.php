@@ -1,6 +1,6 @@
 <?php
 
-class ReportsApiController extends Controller {
+class ReportsByUserApiController extends Controller {
 
     function index() {
         return $this->ok();
