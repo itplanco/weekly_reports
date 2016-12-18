@@ -3,8 +3,8 @@
 class UsersApiController extends Controller {
     private $repository;
     
-    function __construct($repository) {
-        if (isset($repository)) {
+    function __construct($repository = NULL) {
+        if ($repository) {
             $this->repository = $repository;
         } else {
             $this->repository = new UsersRepository(Db::getInstance());
@@ -36,16 +36,18 @@ class UsersApiController extends Controller {
      * ユーザーを登録する
      */
     function post($data) {
-        if (isset($data['user_id']) && $data['user_id']) {
+        $user = User::parse($data);
+        
+        if ($user->user_id) {
             return $this->badRequest("新規登録時にはIDを指定しないでください。");
         }
 
-        if (!isset($data['name'])) {
+        if (!$user->name) {
             return $this->badRequest("名前は必ず指定してください。");
         }
 
         //IDを新規に採番
-        $data['user_id'] = $this->repository->nextId();
+        $user->user_id = $this->repository->nextId();
         $this->repository->insert($data);
         
         return $this->ok();
@@ -55,14 +57,16 @@ class UsersApiController extends Controller {
      * ユーザーを更新する
      */
     function put($id, $data) {
+        $user = User::parse($data);
+
         $result = $this->repository->findById($id);
         if (!$result) {
             // ユーザーが存在しない場合
             return $this->notFound();
         }
 
-        $data['user_id'] = $id;
-        $this->repository->update($data);
+        $user->user_id = $id;
+        $this->repository->update($user);
         return $this->ok();
     }
     

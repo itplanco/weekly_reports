@@ -16,5 +16,6 @@ spl_autoload_register(function($className)
     require_once($dir . "/models/Models.php");
     require_once($dir . "/models/Users.php");
     require_once($dir . "/models/Reports.php");
+    require_once($dir . "/models/Week.php");
     require_once($dir . "/services/AuthService.php");
 });
