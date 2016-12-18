@@ -1,28 +1,12 @@
 <?php
 
-class Comment {
+class Comment extends Model {
     public $user_id;
     public $message;
     public $post_date_time;
-
-    static function parse($data) {
-        $data = (object) $data;
-        $comment = new Comment();
-
-        if (isset($data->user_id)) {
-            $comment->user_id = $data->user_id;
-        }
-        if (isset($data->message)) {
-            $comment->message = $data->message;
-        }
-        if (isset($data->post_date_time)) {
-            $comment->post_date_time = $data->post_date_time;
-        }
-        return $comment;
-    }
 }
 
-class Report {
+class Report extends Model {
     public $year;
     public $weeknum;
     public $user_id;
@@ -50,26 +34,12 @@ class Report {
 
     static function parse($data) {
         $data = (object) $data;
-        $report = new Report();
-
-        if (isset($data->year)) {
-            $report->year = $data->year;
-        }
-        if (isset($data->weeknum)) {
-            $report->weeknum = $data->weeknum;
-        }
-        if (isset($data->user_id)) {
-            $report->user_id = $data->user_id;
-        }
-        if (isset($data->data)) {
-            $report->data = $data->data;
-        }
+        $report = parent::parse($data);
+        $report->comments = [];
         if (isset($data->comments)) {
             foreach($data->comments as $comment) {
                 $report->comments[] = Comment::parse($comment);
             }
-        } else {
-            $report->comments = [];
         }
         return $report;
     }

@@ -1,47 +1,25 @@
 <?php
 
-class User {
+class Group extends Model {
+    public $group_id;
+    public $name;
+}
+
+class User extends Model {
     public $user_id;
     public $name;
     public $groups;
 
     static function parse($data) {
         $data = (object) $data;
-        $user = new User();
-
-        if (isset($data->user_id)) {
-            $user->user_id = $data->user_id;
-        }
-        if (isset($data->name)) {
-            $user->name = $data->name;
-        }
+        $user = parent::parse($data);
+        $user->groups = [];
         if (isset($data->groups)) {
             foreach($data->groups as $group) {
                 $user->groups[] = Group::parse($group);
             }
-        } else {
-            $user->groups = [];
         }
-
         return $user;
-    }
-}
-
-class Group {
-    public $group_id;
-    public $name;
-
-    static function parse($data) {
-        $data = (object) $data;
-        $group = new Group();
-
-        if (isset($data->group_id)) {
-            $group->group_id = $data->group_id;
-        }
-        if (isset($data->name)) {
-            $group->name = $data->name;
-        }
-        return $group;
     }
 }
 
