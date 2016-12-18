@@ -2,6 +2,8 @@
 
 class Router {
     
+    const PARAM_PATTERN = "/:[A-Za-z][A-Za-z0-9]*/";
+
     private $routes;
     
     function __construct($routes) {
@@ -14,33 +16,43 @@ class Router {
         
         // パスからコントローラを指定
         foreach ($this->routes as $p => $c) {
-            if (preg_match('#' . $p . '#', $path, $matches) === 1) {
+            $param = $this->pathMatch($p, $path);
+            if ($param !== FALSE) {
                 $route->controller = $c['controller'];
                 $route->viewType = $c['viewType'];
+
+                // パラメーターを取得
+                $route->param = $param;
                 
                 // アクションを決定
-                $left = str_replace($p, "", $path);
-                if ($request->method === "GET" && ($left === "" || $left === "/")) {
+                if ($request->method === "GET") {
                     $route->action = $c['action'];
                 } else {
                     $route->action = strtolower($request->method);
-                    $left = substr($left, 1);
-                    if ($left) {
-                        $route->param = explode("/", $left);
-                    } else {
-                        $route->param = array();
-                    }
                 }
                 
-                // PUT、POSTの場合eには内容データも取得
-                if ($request->method === "POST" || $request->method === "PUT") {
-                    $route->param[] = $request->body;
-                } else {
-                    parse_str(parse_url($request->uri, PHP_URL_QUERY), $data);
-                    $route->param[] = $data;
+                // パラメーターを設定
+                if ($request->param) {
+                    $route->param['data'] = $request->param;
                 }
                 return $route;
             }
+        }
+    }
+    
+    private static function pathMatch($pattern, $path) {
+        $rep_path = preg_replace(self::PARAM_PATTERN, "([^/]+)", $pattern);
+        if (preg_match_all('#' . $rep_path . '#', $path, $value_matches, PREG_OFFSET_CAPTURE)) {
+            preg_match_all(self::PARAM_PATTERN, $pattern, $key_matches);
+            $param = [];
+            for ($i = 0; $i < sizeof($key_matches[0]); $i++) {
+                $key = str_replace(":", "", $key_matches[0][$i]);
+                list($value) = $value_matches[$i + 1][0];
+                $param[$key] = $value;
+            }
+            return $param ? $param : [];
+        } else {
+            return FALSE;
         }
     }
 }

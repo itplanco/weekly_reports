@@ -3,14 +3,19 @@
 class Request {
     public $uri;
     public $method;
-    public $body;
+    public $param;
 
-    function __construct() {
-        $this->uri = $_SERVER["REQUEST_URI"];
-        $this->method = $_SERVER["REQUEST_METHOD"];
-        $this->body = [];
-        foreach($_POST as $key => $value) { 
-            $this->body[$key] = $value;
+    function setVariables($server, $get, $post) {
+        $this->uri = $server["REQUEST_URI"];
+        $this->method = $server["REQUEST_METHOD"];
+        $this->param = [];
+
+        foreach($get as $key => $value) { 
+            $this->param[$key] = $value;
+        }
+
+        foreach($post as $key => $value) { 
+            $this->param[$key] = $value;
         }
     }
 }

@@ -39,6 +39,7 @@ $routes = array(
 
 try {
     $request = new Request();
+    $request->setVariables($_SERVER, $_GET, $_POST);
     $router = new Router($routes);
     $route = $router->route($request);
     
