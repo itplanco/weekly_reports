@@ -2,8 +2,8 @@
 
 class Comment {
     public $user_id;
-    public $comment;
-    public $posted;
+    public $message;
+    public $post_date_time;
 
     static function parse($data) {
         $data = (object) $data;
@@ -12,11 +12,11 @@ class Comment {
         if (isset($data->user_id)) {
             $comment->user_id = $data->user_id;
         }
-        if (isset($data->comment)) {
-            $comment->comment = $data->comment;
+        if (isset($data->message)) {
+            $comment->message = $data->message;
         }
-        if (isset($data->posted)) {
-            $comment->posted = $data->posted;
+        if (isset($data->post_date_time)) {
+            $comment->post_date_time = $data->post_date_time;
         }
         return $comment;
     }
@@ -35,16 +35,16 @@ class Report {
         $this->data[$key] = $value;
     }
 
-    function addComments($user_id, $message) {
+    function addComment($user_id, $message) {
         $comment = new Comment();
         $comment->user_id = $userId;
-        $comment->comment = $message;
-        $comment->posted = date('Y-m-d H:i:s');
+        $comment->message = $message;
+        $comment->post_date_time = new DateTime();
         $this->comments[] = $comment;
     }
 
     function publish($publish_comment) {
-        $this->publish_date_time = date('Y-m-d H:i:s');
+        $this->publish_date_time = new DateTime();
         $this->publish_comment = $publish_comment;
     }
 
