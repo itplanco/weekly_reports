@@ -18,6 +18,6 @@ class AuthorizeController extends Controller {
         $response_type = $data['response_type'];
         $client_id = $data['client_id'];
         $redirect_uri = $data['redirect_uri'];
-        return $this->noContent();
+        return $this->ok();
     }
 }

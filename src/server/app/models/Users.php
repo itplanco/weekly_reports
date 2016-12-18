@@ -1,5 +1,16 @@
 <?php
 
+class Group {
+    public $group_id;
+    public $name;
+}
+
+class User {
+    public $use_id;
+    public $name;
+    public $groups = [];
+}
+
 class UsersRepository {
     
     private $db;

@@ -48,7 +48,7 @@ class UsersApiController extends Controller {
         $data['user_id'] = $this->repository->nextId();
         $this->repository->insert($data);
         
-        return $this->noContent();
+        return $this->ok();
     }
     
     /**
@@ -63,7 +63,7 @@ class UsersApiController extends Controller {
 
         $data['user_id'] = $id;
         $this->repository->update($data);
-        return $this->noContent();
+        return $this->ok();
     }
     
     /**
@@ -77,6 +77,6 @@ class UsersApiController extends Controller {
         }
 
         $this->repository->delete($id);
-        return $this->noContent();
+        return $this->ok();
     }
 }

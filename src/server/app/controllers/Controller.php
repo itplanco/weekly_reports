@@ -9,7 +9,10 @@ class Controller {
         return;
     }
 
-    function ok($model) {
+    function ok($model = NULL) {
+        if ($model === NULL) {
+            return $this->ok();
+        }
         return $model;
     }
 
