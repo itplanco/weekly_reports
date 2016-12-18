@@ -28,9 +28,11 @@ class Report {
     public $user_id;
     public $data = [];
     public $comments = [];
+    public $publish_date_time;
+    public $publish_comment;
 
     function addData($key, $value) {
-        $data[$key] = $value;
+        $this->data[$key] = $value;
     }
 
     function addComments($user_id, $message) {
@@ -38,7 +40,12 @@ class Report {
         $comment->user_id = $userId;
         $comment->comment = $message;
         $comment->posted = date('Y-m-d H:i:s');
-        $comments[] = $comment;
+        $this->comments[] = $comment;
+    }
+
+    function publish($publish_comment) {
+        $this->publish_date_time = date('Y-m-d H:i:s');
+        $this->publish_comment = $publish_comment;
     }
 
     static function parse($data) {
