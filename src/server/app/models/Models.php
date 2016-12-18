@@ -18,7 +18,7 @@ class Db {
     function getArrayResult($sql, ...$param) {
         $sql_result = $this->executePreparedStatement($sql, $param);
         $result = array();
-        while($data=$sql_result->fetchObject()) {
+        while($data=$sql_result->fetchArray(PDO::FETCH_OBJ)) {
             $result[] = $data;
         }
         return $result;
@@ -26,7 +26,7 @@ class Db {
     
     function getSingleResult($sql, ...$param) {
         $sql_result = $this->executePreparedStatement($sql, $param);
-        while($data=$sql_result->fetchObject()) {
+        while($data=$sql_result->fetchArray(PDO::FETCH_OBJ)) {
             return $data;
         }
     }

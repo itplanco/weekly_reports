@@ -58,7 +58,7 @@ class UsersRepository {
     }
     
     function findAll() {
-        $data = $this->db->getArrayResult(User::class, "SELECT * FROM users");
+        $data = $this->db->getArrayResult("SELECT * FROM users");
         if (!$data) {
             return [];
         }
@@ -70,7 +70,7 @@ class UsersRepository {
     }
     
     function findById($id) {
-        $user = $this->db->getSingleResult(User::class, "SELECT * FROM users WHERE user_id = ?", $id);
+        $user = $this->db->getSingleResult("SELECT * FROM users WHERE user_id = ?", $id);
         return User::parse(json_decode($user['json'], TRUE));
     }
     
@@ -80,7 +80,7 @@ class UsersRepository {
         $json = json_encode($user);
 
         // DBに登録
-        $result = $this->db->executeQuery("INSERT INTO users (user_id, json) values (?, ?)", $user->user_id, json_encode($user));
+        $result = $this->db->executeQuery("INSERT INTO users (user_id, json) values (?, ?)", $id, $json);
         if ($result === FALSE) {
             throw new Exception("DBの登録に失敗しました。");
         }
