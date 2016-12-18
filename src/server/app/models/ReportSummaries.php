@@ -39,11 +39,11 @@ class ReportSummariesRepository {
     }
 
     function selectSummariesForWeek($year, $weeknum) {
-        $result = $this->db->getArrayResult("SELECT weekly_reports.*, users.json FROM weekly_reports INNER JOIN users ON week_reports.user_id = users.user_id WHERE year = ? AND weeknum = ?", $year, $weeknum);
+        $result = $this->db->getArrayResult("SELECT weekly_reports.*, users.json FROM users INNER JOIN weekly_reports ON week_reports.user_id = users.user_id WHERE year = ? AND weeknum = ?", $year, $weeknum);
         $reportSummaries = [];
         foreach ($result as $record) {
             $reportSummary = ReportSummary::parse((array) $record);
-            $reportSummary->user = User::parse($record->json);
+            $reportSummary->user = User::parse(json_encode($record->json));
             $reportSummaries[] = $reportSummary;
         }
         return $reportSummaries;
