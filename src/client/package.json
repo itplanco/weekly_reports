@@ -1,5 +1,5 @@
 {
-  "name": "angular-quickstart",
+  "name": "weekly_reports",
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
@@ -16,7 +16,7 @@
     "@angular/core": "2.0.0",
     "@angular/forms": "2.0.0",
     "@angular/http": "2.0.0",
-    "@angular/material": "^2.0.0",
+    "@angular/material": "*",
     "@angular/platform-browser": "2.0.0",
     "@angular/platform-browser-dynamic": "2.0.0",
     "@angular/router": "3.0.0",

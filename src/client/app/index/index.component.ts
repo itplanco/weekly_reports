@@ -1,21 +1,33 @@
 
 import { Component } from '@angular/core';
-import { RouterModule, Router } from '@angular/router'; 
+import { RouterModule, Router } from '@angular/router';
+
+export class WeeklyReportSummary {
+    name: string;
+    imageUrl: string;
+    publishComment: string;
+    publishDateTime: Date;
+}
 
 @Component({
-  selector: 'index',
-  template: `
-    <div (click)="onLoginClick()">
-        Index
-    </div>
-    `
+    moduleId: module.id,
+    selector: 'wr-weekly-report-summary',
+    templateUrl: 'index.component.html',
 })
 export class IndexComponent {
-  constructor(private router: Router) {
-    } 
+    summaries: WeeklyReportSummary[] = [
+        {
+            name: "K.K",
+            imageUrl: "image.jpg",
+            publishComment: null,
+            publishDateTime: null
+        }
+    ];
 
-    onLoginClick():void{
+    constructor(private router: Router) {
+    }
+
+    onDetailClick(): void {
         this.router.navigate(['detail']);
     }
-  
 }

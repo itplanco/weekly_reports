@@ -2,13 +2,10 @@
 import { Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; 
 
-
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
-  template: `
-    <header></header>
-    <router-outlet></router-outlet>
-    `
+  templateUrl: 'app.component.html',
 })
 export class AppComponent {
   

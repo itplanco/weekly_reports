@@ -1,0 +1,12 @@
+<md-sidenav-layout>
+    <md-sidenav #sidenav mode="over" class="app-sidenav">
+        <wr-sidenav></wr-sidenav>
+    </md-sidenav>
+    <md-toolbar color="primary">
+        <button md-button class="app-icon-button" (click)="sidenav.toggle()">
+            <i class="material-icons app-toolbar-menu">menu</i>
+        </button>
+        週報管理
+    </md-toolbar>
+    <router-outlet></router-outlet>
+</md-sidenav-layout>
