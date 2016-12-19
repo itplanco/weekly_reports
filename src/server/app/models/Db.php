@@ -12,26 +12,29 @@ class Db {
     }
     
     function getArrayResult($sql, ...$param) {
-        $sql_result = $this->executePreparedStatement($sql, $param);
+        $statement = $this->prepare($sql, $param);
+        $statement->execute();
         $result = [];
-        while($data = $sql_result->fetch(PDO::FETCH_OBJ)) {
+        while($data = $statement->fetch(PDO::FETCH_OBJ)) {
             $result[] = $data;
         }
         return $result;
     }
     
     function getSingleResult($sql, ...$param) {
-        $sql_result = $this->executePreparedStatement($sql, $param);
-        while($data = $sql_result->fetch(PDO::FETCH_OBJ)) {
+        $statement = $this->prepare($sql, $param);
+        $statement->execute();
+        while($data = $statement->fetch(PDO::FETCH_OBJ)) {
             return $data;
         }
+        return NULL;
     }
     
     function executeQuery($sql, ...$param) {
-        return $this->executePreparedStatement($sql, $param);
+        return $this->prepare($sql, $param)->execute();
     }
     
-    private function executePreparedStatement($sql, $param) {
+    private function prepare($sql, $param) {
         $statement = $this->db->prepare($sql);
         if ($param) {
             $index = 1;
@@ -40,7 +43,6 @@ class Db {
                 $index++;
             }
         }
-        $statement->execute();
         return $statement;
     }
 }

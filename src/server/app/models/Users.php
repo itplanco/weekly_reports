@@ -42,14 +42,16 @@ class UsersRepository {
         }
 
         foreach ($data as $user) {
-            $result[] = User::parse(json_decode($user['json'], TRUE));
+            $result[] = User::parse(json_decode($user->json, TRUE));
         }
         return $result;
     }
     
     function findById($id) {
         $user = $this->db->getSingleResult("SELECT * FROM users WHERE user_id = ?", $id);
-        return User::parse(json_decode($user['json'], TRUE));
+        if ($user) {
+            return User::parse(json_decode($user->json, TRUE));
+        }
     }
     
     function insert(User $user) {
@@ -63,7 +65,7 @@ class UsersRepository {
             throw new Exception("DBの登録に失敗しました。");
         }
 
-        return findById($id);
+        return $this->findById($id);
     }
     
     function update(User $user) {
@@ -77,13 +79,13 @@ class UsersRepository {
             throw new Exception("DBの登録に失敗しました。");
         }
         
-        // 新規に登録したデータを返す
-        return findById($id);
+        // 更新したデータを返す
+        return $this->findById($id);
     }
     
     function delete($id) {
         // DBから削除
-        $result = $this->db->executeQuery("DELETE users WHERE user_id = ?", $id);
+        $result = $this->db->executeQuery("DELETE FROM users WHERE user_id = ?", $id);
         if ($result === FALSE) {
             throw new Exception("DBの登録に失敗しました。");
         }
