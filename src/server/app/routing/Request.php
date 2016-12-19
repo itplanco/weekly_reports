@@ -18,14 +18,11 @@ class Request {
             $this->param[$key] = $value;
         }
 
-        if ($thi->method === "PUT") {
-            // PUTのデータが取れないので、インプットからデコード
-            $body = file_get_contents("php://input");
-
-            $params = explode("&", $body);
-            foreach ($params as $strParam) {
-                list($key, $value) = explode("=", $strParam);
-                $this->param[urldecode($key)] = urldecode($value);
+        if ($this->method === "PUT") {
+            // PUTの場合はparse_strを使用して取得する
+            parse_str(file_get_contents("php://input"), $params);
+            foreach ($params as $key => $value) {
+                $this->param[$key] = $value;
             }
         }
     }
