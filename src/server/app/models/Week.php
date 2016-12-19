@@ -17,8 +17,8 @@ class Week {
      * 週の最初を返す
      */
     function firstDateOfWeek() {
-        $week_start = new DateTime();
-        $week_start->setISODate($year, $weeknum);
+        $week_start = new DateTime('2000-01-01T00:00:00', new DateTimeZone("UTC"));
+        $week_start->setISODate($this->year, $this->weeknum);
         return $week_start;
     }
 
@@ -26,8 +26,8 @@ class Week {
      * 週の最後を返す
      */
     function lastDateOfWeek() {
-        $week_end = new DateTime();
-        $week_end->setISODate($year, $weeknum + 1);
+        $week_end = new DateTime('2000-01-01T00:00:00', new DateTimeZone("UTC"));
+        $week_end->setISODate($this->year, $this->weeknum, 7);
         return $week_end;
     }
 
