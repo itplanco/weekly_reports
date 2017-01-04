@@ -10,6 +10,12 @@ class Route {
         $controller = new $this->controller;
         $action = $this->action;
         $controller->route = $this;
-        return $controller->$action(...$this->param);
+
+        $methodInfo = new ReflectionMethod($this->controller, $action);
+        $paramArgs = [];
+        foreach($methodInfo->getParameters() as $param) {
+            $paramArgs[] = $this->param[$param->name];
+        }
+        return $controller->$action(...$paramArgs);
     }
 }

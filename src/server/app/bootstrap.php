@@ -13,46 +13,33 @@ $routes = array(
     "/api/users/:id" => [
         "viewType" => "json",
         "controller" => "UsersApiController",
-        "action" => "index"
+        "action" => "get"
     ],
     "/api/users" => [
         "viewType" => "json",
         "controller" => "UsersApiController",
         "action" => "index"
     ],
-    "/api/reports/:year/:weekNum/:id/comments" => [
+    "/api/reports/:year/:weeknum/:id/comments" => [
         "viewType" => "json",
         "controller" => "ReportCommentsApiController",
         "action" => "index"
     ],
-    "/api/reports/:year/:weekNum/:id" => [
+    "/api/reports/:year/:weeknum/:id" => [
         "viewType" => "json",
         "controller" => "ReportsApiController",
-        "action" => "index"
+        "action" => "get"
     ],
-    "/api/reports/:year/:weekNum" => [
+    "/api/reports/:year/:weeknum" => [
         "viewType" => "json",
         "controller" => "WeeklyReportsApiController",
-        "action" => "index"
-    ],
-    "/api/reports/byuser/:id/latest" => [
-        "viewType" => "json",
-        "controller" => "ReportsByUserApiController",
-        "action" => "index",
-        "param" => [
-            "year" => 2016,
-            "weekNum" => 53,
-        ]
-    ],
-    "/api/reports/byuser/:id/from/:year/:weekNum" => [
-        "viewType" => "json",
-        "controller" => "ReportsByUserApiController",
         "action" => "index"
     ],
 );
 
 try {
     $request = new Request();
+    $request->setVariables($_SERVER, $_GET, $_POST);
     $router = new Router($routes);
     $route = $router->route($request);
     

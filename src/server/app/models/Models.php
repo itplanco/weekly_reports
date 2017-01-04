@@ -1,49 +1,21 @@
 <?php
 
-class Db {
-    private $db;
-    
-    static function getInstance() {
-        return new Db();
-    }
-    
-    function __construct() {
-        $this->db = new SQLite3(__DIR__ . '/../../db/weekly_reports.sqlite3');
-    }
-    
-    function __destruct() {
-        $this->db->close();
-    }
-    
-    function getArrayResult($sql, ...$param) {
-        $sql_result = $this->executePreparedStatement($sql, $param);
-        $result = array();
-        while($data=$sql_result->fetchObject()) {
-            $result[] = $data;
+class Model {
+    static function parse($obj) {
+        if (is_array($obj)) {
+            $obj = (object) $obj;
         }
-        return $result;
-    }
-    
-    function getSingleResult($sql, ...$param) {
-        $sql_result = $this->executePreparedStatement($sql, $param);
-        while($data=$sql_result->fetchObject()) {
-            return $data;
-        }
-    }
-    
-    function executeQuery($sql, ...$param) {
-        return $this->executePreparedStatement($sql, $param);
-    }
-    
-    private function executePreparedStatement($sql, $param) {
-        $statement = $this->db->prepare($sql);
-        if ($param) {
-            $index = 1;
-            foreach ($param as $value) {
-                $statement->bindValue($index, $value);
-                $index++;
+
+        $className = get_called_class();
+        $retObj = new $className;
+
+        $classInfo = new ReflectionClass($className);
+        foreach ($classInfo->getProperties() as $prop) {
+            if (isset($obj->{$prop->name})) {
+                $prop->setAccessible(TRUE);
+                $prop->setValue($retObj, $obj->{$prop->name});
             }
         }
-        return $statement->execute();
-    }
+        return $retObj;
+    } 
 }

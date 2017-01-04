@@ -48,9 +48,9 @@ class UsersApiController extends Controller {
 
         //IDを新規に採番
         $user->user_id = $this->repository->nextId();
-        $this->repository->insert($data);
+        $user = $this->repository->insert($user);
         
-        return $this->ok();
+        return $this->ok($user);
     }
     
     /**
@@ -66,8 +66,8 @@ class UsersApiController extends Controller {
         }
 
         $user->user_id = $id;
-        $this->repository->update($user);
-        return $this->ok();
+        $user = $this->repository->update($user);
+        return $this->ok($user);
     }
     
     /**

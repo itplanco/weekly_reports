@@ -17,17 +17,31 @@ class Week {
      * 週の最初を返す
      */
     function firstDateOfWeek() {
-        return NULL;
+        $week_start = new DateTime('2000-01-01T00:00:00', new DateTimeZone("UTC"));
+        $week_start->setISODate($this->year, $this->weeknum);
+        return $week_start;
     }
 
     /**
      * 週の最後を返す
      */
     function lastDateOfWeek() {
-        return NULL;
+        $week_end = new DateTime('2000-01-01T00:00:00', new DateTimeZone("UTC"));
+        $week_end->setISODate($this->year, $this->weeknum, 7);
+        return $week_end;
     }
 
+    /**
+     * 特定日の週オブジェクトを取得する
+     */
     static function weekOfDate($date) {
-        return new Week(2016, 51);
+        return new Week((int) $date->format("Y"), (int) $date->format("W"));
+    }
+
+    /**
+     * 今日の週オブジェクトを取得する
+     */
+    static function weekForToday() {
+        return weekOfDate(new DateTime());
     }
 }

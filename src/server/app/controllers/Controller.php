@@ -11,7 +11,7 @@ class Controller {
 
     function ok($model = NULL) {
         if ($model === NULL) {
-            return $this->ok();
+            return $this->noContent();
         }
         return $model;
     }

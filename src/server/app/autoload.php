@@ -10,9 +10,9 @@ spl_autoload_register(function($className)
     require_once($dir . "/controllers/AuthorizeController.php");
     require_once($dir . "/controllers/ReportCommentsApiController.php");
     require_once($dir . "/controllers/ReportsApiController.php");
-    require_once($dir . "/controllers/ReportsByUserApiController.php");
     require_once($dir . "/controllers/UsersApiController.php");
     require_once($dir . "/controllers/WeeklyReportsApiController.php");
+    require_once($dir . "/models/Db.php");
     require_once($dir . "/models/Models.php");
     require_once($dir . "/models/Users.php");
     require_once($dir . "/models/Reports.php");
