@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<phpunit>
+    <php>
+        <var name="DB_DSN" value="sqlite:db/weekly_reports.sqlite3" />
+        <var name="DB_USER" />
+        <var name="DB_PASSWD" />
+        <var name="DB_DBNAME" value=":memory" />
+    </php>
+</phpunit>

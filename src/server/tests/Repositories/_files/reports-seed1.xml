@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<dataset>
+    <weekly_report_items year="2016" weeknum="1" user_id="1" item_name="test_key1" content="test_content1" />
+    <weekly_report_items year="2016" weeknum="1" user_id="1" item_name="test_key2" content="test_content2" />
+    <weekly_reports year="2016" weeknum="1" user_id="1" publish_date_time="2016-01-01 11:22:33" publish_comment="publish_comment" />
+    <weekly_reports year="2016" weeknum="1" user_id="3" />
+    <weekly_report_comments year="2016" weeknum="1" user_id="1" index="1" sender_user_id="2" message="test_message" post_date_time="2016-01-01 12:34:56" />
+</dataset>
