@@ -69,7 +69,7 @@ class ReportsRepository
         $aPublication = $this->findPublicationById($year, $weeknum, $user_id);
         if ($aPublication) {
             $aReport->publish_comment   = $aPublication->publish_comment;
-            $aReport->publish_date_time = new Datetime($aPublication->publish_date_time);
+            $aReport->publish_date_time = $aPublication->publish_date_time;
         }
 
         $comments = $this->findCommentsById($year, $weeknum, $user_id);
@@ -101,11 +101,22 @@ class ReportsRepository
 
     private function findPublicationById($year, $weeknum, $user_id)
     {
-        return $this->db->getSingleResult('SELECT * FROM weekly_reports '
-                                          . 'WHERE year    = ? '
-                                          . 'AND   weeknum = ? '
-                                          . 'AND   user_id = ? '
-                                         , $year, $weeknum, $user_id);
+        $aRecord = $this->db->getSingleResult('SELECT * FROM weekly_reports '
+                                              . 'WHERE year    = ? '
+                                              . 'AND   weeknum = ? '
+                                              . 'AND   user_id = ? '
+                                              , $year, $weeknum, $user_id);
+        if ($aRecord) {
+            $aReport = new Report();
+            $aReport->year              = $year;
+            $aReport->weeknum           = $weeknum;
+            $aReport->user_id           = $user_id;
+            $aReport->publish_date_time = new DateTime($aRecord->publish_date_time);
+            $aReport->publish_comment   = $aRecord->publish_comment;
+            return $aReport;
+        }
+
+        return null;
     }
 
     private function findCommentsById($year, $weeknum, $user_id)

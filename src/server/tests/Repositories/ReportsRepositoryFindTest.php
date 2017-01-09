@@ -90,11 +90,12 @@ class ReportsRepositoryFindTest extends PHPUnit_Extensions_Database_TestCase
         $db = Db::getInstance();
         $repository = new ReportsRepository($db);
 
-        $expected = (object) array('year'              => '2016'
-                                  ,'weeknum'           => '1'
-                                  ,'user_id'           => '1'
-                                  ,'publish_date_time' => '2016-01-01 11:22:33'
-                                  ,'publish_comment'   => 'publish_comment');
+        $expected = new Report();
+        $expected->year              = '2016';
+        $expected->weeknum           = '1';
+        $expected->user_id           = '1';
+        $expected->publish_date_time = new DateTime('2016-01-01 11:22:33');
+        $expected->publish_comment   = 'publish_comment';
 
         $actual = $this->privateMethod->invokeArgs($repository, [2016, 1, 1]);
 
