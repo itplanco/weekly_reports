@@ -10,6 +10,11 @@ $routes = array(
         "controller" => "AuthorizeController",
         "action" => "index"
     ],
+    "/api/login" => [
+        "viewType" => "json",
+        "controller" => "LoginApiController",
+        "action" => "index"
+    ],
     "/api/users/:id" => [
         "viewType" => "json",
         "controller" => "UsersApiController",

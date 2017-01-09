@@ -69,15 +69,18 @@ if(!function_exists('mime_content_type')) {
     }
 }
 
-$path = __DIR__ . $_SERVER['REQUEST_URI'];
-if (substr($path, strlen($path) - 1) == "/") {
-    $path = $path . "index.html";
-}
-if (is_file($path)) {
-    $mimeType = mime_content_type($path);
-    header("Content-Type: {$mimeType}");
-    readfile($path);
+if (preg_match("#^/api/#", $_SERVER['REQUEST_URI'])) {
+    require_once __DIR__ . "/../app/bootstrap.php";
     return;
 }
 
-require_once __DIR__ . "/../app/bootstrap.php";
+$client_path = __DIR__ . "/../../client";
+$path = $client_path . $_SERVER['REQUEST_URI'];
+if (!is_file($path)) {
+    $path = $client_path . "/index.html";
+}
+
+$mimeType = mime_content_type($path);
+header("Content-Type: {$mimeType}");
+readfile($path);
+

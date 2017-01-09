@@ -8,6 +8,7 @@ spl_autoload_register(function($className)
     require_once($dir . "/routing/Route.php");
     require_once($dir . "/controllers/Controller.php");
     require_once($dir . "/controllers/AuthorizeController.php");
+    require_once($dir . "/controllers/LoginApiController.php");
     require_once($dir . "/controllers/ReportCommentsApiController.php");
     require_once($dir . "/controllers/ReportsApiController.php");
     require_once($dir . "/controllers/UsersApiController.php");

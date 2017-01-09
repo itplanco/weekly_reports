@@ -10,7 +10,7 @@ import { LoginService } from './login.service';
     templateUrl: 'login.component.html'
 })
 export class LoginComponent implements OnInit {
-    email: string;
+    username: string;
     password: string;
 
     errorMessage: string;
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     }
 
     onSubmit() {
-        this.loginService.login(this.email, this.password)
+        this.loginService.login(this.username, this.password)
             .subscribe((result) => {
                     if (result) {
                         this.router.navigate([this.returnUrl]);
