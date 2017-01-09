@@ -14,7 +14,6 @@ export class LoginService {
     }
 
     login(email: String, password: String) {
-        /*
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -31,15 +30,6 @@ export class LoginService {
                 }
                 return body.success;
             });
-            */
-        let subject = new Subject<boolean>();
-        setTimeout(() => {
-            subject.next(true);
-            localStorage.setItem('auth_token', 'testtoken');
-            this.loggedIn = true;
-            this.loginStateChanged.emit(true);
-        }, 500);
-        return subject;
     }
 
     logout() {
