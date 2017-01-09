@@ -3,31 +3,37 @@
 use PHPUnit\Framework\TestCase;
 
 class ReportsTest extends TestCase {
-    function testAddData1() {
+    /**
+     * @dataProvider testAddDataAdditionProvider
+     */
+    function testAddData($entrydata, $expected) {
         $cut = new Report();
-        $expected = array('a' => 'b');
-        $cut->addData(Key($expected), current($expected));
+        foreach ($entrydata as $key => $value) $cut->addData($key, $value);
         $actual = $cut->data;
         $this->assertThat($actual, $this->equalTo($expected));
     }
 
-    function testAddData2() {
-        $cut = new Report();
-        $expected = array('A' => 1,
-                          'B' => 2,
-                          'C' => 3);
-
-        foreach($expected as $key => $value)
-            $cut->addData($key, $value);
-
-        $actual = $cut->data;
-
-        $this->assertThat($actual, $this->equalTo($expected));
-    }
-
-    function testAddComment()
+    function testAddDataAdditionProvider()
     {
-        $dummyTimestamp = (new DateTime())->getTimestamp();
+        return [
+            'zero' => [[], []],
+            'one'  => [
+                ['a'=>'b'],
+                ['a'=>'b']
+            ],
+            'two'  => [
+                ['A'=>'1','B'=>'2'],
+                ['A'=>'1','B'=>'2']
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider testAddCommentAdditionProvider
+     */
+    function testAddComment($entrydata, $expected)
+    {
+        $dummyTimestamp = new DateTime('2016-01-01 11:11:11');
 
         $stub = $this->getMockBuilder(Report::class)
                      ->setMethods(['stampDateTime'])
@@ -35,28 +41,46 @@ class ReportsTest extends TestCase {
         $stub->method('stampDateTime')
              ->willReturn($dummyTimestamp);
 
-        $user_id = '001';
-        $message = 'test message';
-
-        $comment = new Comment();
-        $comment->user_id = $user_id;
-        $comment->message = $message;
-        $comment->post_date_time = $dummyTimestamp;
-
-        $expected = [];
-        $expected[] = $comment;
-
-        sleep(1);
-        $stub->addComment($user_id, $message);
+        foreach ($entrydata as $d) {
+            $d = (Object)$d;
+            $stub->addComment($d->user_id, $d->message);
+        }
         $actual = $stub->comments;
 
         $this->assertThat($actual, $this->equalTo($expected));
     }
 
-    function testPublish()
+    function testAddCommentAdditionProvider()
+    {
+        $comment1 = new Comment();
+        $comment1->user_id = 'user1';
+        $comment1->message = 'message1';
+        $comment1->post_date_time = new DateTime('2016-01-01 11:11:11');
+
+        $comment2 = new Comment();
+        $comment2->user_id = 'user2';
+        $comment2->message = 'message2';
+        $comment2->post_date_time = new DateTime('2016-01-01 11:11:11');
+
+        return [
+            'zero' => [[], []],
+            'one'  => [
+                [['user_id'=>'user1', 'message'=>'message1']],
+                [$comment1]
+            ],
+            'two'  => [
+                [['user_id'=>'user1', 'message'=>'message1'], ['user_id'=>'user2', 'message'=>'message2']],
+                [$comment1, $comment2]
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider testPublishAdditionProvider
+     */
+    function testPublish($entrydata, $expectedPublishComment)
     {
         $dummyTimestamp = (new DateTime())->getTimestamp();
-        $publishComment = 'publish comment';
 
         $stub = $this->getMockBuilder(Report::class)
                      ->setMethods(['stampDateTime'])
@@ -65,31 +89,20 @@ class ReportsTest extends TestCase {
             ->willReturn($dummyTimestamp);
 
         $expectedPublishDateTime = $dummyTimestamp;
-        $expectedPublishComment  = $publishComment;
 
-        $stub->publish($publishComment);
+        $stub->publish($entrydata);
         $actualPublishDateTime = $stub->publish_date_time;
-        $actualPublishComment  = $publishComment;
+        $actualPublishComment  = $stub->publish_comment;
 
         $this->assertThat($actualPublishDateTime, $this->equalTo($expectedPublishDateTime));
         $this->assertThat($actualPublishComment, $this->equalTo($expectedPublishComment));
     }
 
-    function testParse()
+    function testPublishAdditionProvider()
     {
-        $comment = array('user_id' => 'taro',
-                         'message' => 'great',
-                         'post_date_time' => strtotime('2016-12-31 00:01:30'));
-        $data = array('comments' => $comment);
-
-        $expectedComment = new Comment();
-        $expectedComment->message = $comment['message'];
-        $expectedComment->post_date_time = $comment['post_date_time'];
-        $expectedComment->user_id = $comment['user_id'];
-        $expected = new Report();
-        $expected->comments[] = $expectedComment;
-        $actual = Report::parse($data);
-
-        $this->assertThat($actual, $this->equalTo($expected));
+        return [
+            'null' => [null, null],
+            'one'  => ['test_publish_comment', 'test_publish_comment'],
+        ];
     }
 }
