@@ -45,7 +45,6 @@ class Report extends Model
 
 class ReportsRepository
 {
-
     private $db;
 
     function __construct($db) 
@@ -87,7 +86,7 @@ class ReportsRepository
 
     function findItemById($year, $weeknum, $user_id, $item_name)
     {
-        return $this->db->getSingleResult("SELECT * FROM weekly_report_items WHERE year = ? AND weeknum = ? AND user_id = ? AND item_name = ?"
+        return $this->db->getSingleResult('SELECT * FROM weekly_report_items WHERE year = ? AND weeknum = ? AND user_id = ? AND item_name = ?'
                                          , $year, $weeknum, $user_id, $item_name);
     }
 
@@ -119,25 +118,40 @@ class ReportsRepository
                                         , $year, $weeknum, $user_id);
     }
 
-    function save($report)
+    function save(Report $report)
     {
-        $result = $this->db->executeQuery("INSERT INTO weekly_reports (year, weeknum, user_id, publish_date_time, publish_comment) values (?, ?, ?, ?, ?)"
-                                         , $report->year, $report->weeknum, $report->user_id, $report->publish_date_time->format('Y-m-d H:i:s'), $report->publish_comment);
-        return $result;
+        if ($report == null) throw new Exception();
+
+        $this->saveItems($report);
+        $this->savePublication($report);
+        $this->saveComments($report);
+
+        return;
     }
 
-    private function publish($report) 
+    private function saveItems(Report $aReport)
     {
-        $result = $this->db->executeQuery("INSERT INTO weekly_reports (year, weeknum, user_id, publish_date_time, publish_comment) values (?, ?, ?, ?, ?)"
-                                         , $report->year, $report->week, $report->user_id, $report->publish_date_time, $report->publish_comment);
+        foreach ($aReport->data as $item_name => $content) {
+            return $this->db->executeQuery('INSERT INTO weekly_report_items (year, weeknum, user_id, item_name, content) values (?, ?, ?, ?, ?)'
+                                          , $aReport->year, $aReport->weeknum, $aReport->user_id, $item_name, $content);
+        }
     }
 
-    function reportsForWeek($year, $weekNum) 
+    private function savePublication(Report $aReport)
     {
+        if ($aReport->publish_date_time <> null) {
+            return $this->db->executeQuery('INSERT INTO weekly_reports (year, weeknum, user_id, publish_date_time, publish_comment) values (?, ?, ?, ?, ?)'
+                                          , $aReport->year, $aReport->weeknum, $aReport->user_id, $aReport->publish_date_time->format('Y-m-d H:i:s'), $aReport->publish_comment);
+        }
     }
 
-    function latestReportsByUser($userId, $key, $fetchCount, $page) 
+    private function saveComments(Report $aReport)
     {
+        $i = 1;
+        foreach ($aReport->comments as $aComment) {
+            return $this->db->executeQuery('INSERT INTO weekly_report_comments (year, weeknum, user_id, "index", sender_user_id, message, post_date_time) values (?, ?, ?, ?, ?, ?, ?)'
+                                          , $aReport->year, $aReport->weeknum, $aReport->user_id, $i, $aComment->user_id, $aComment->message, $aComment->post_date_time->format('Y-m-d H:i:s'));
+            $i++;
+        }
     }
-
 }
