@@ -57,10 +57,10 @@ export class DetailComponent implements OnInit {
   }
 
   onCloseClick() {
-        this.router.navigate(['']);
-    }
+    this.router.navigate(['']);
+  }
 
-    onPublishClick() {
-        this.router.navigate(['']);
-    }
+  onPublishClick() {
+    this.router.navigate(['']);
+  }
 }
