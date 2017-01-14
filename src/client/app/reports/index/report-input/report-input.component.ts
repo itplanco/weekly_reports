@@ -48,14 +48,11 @@ export class ReportInputComponent implements OnInit {
 
     private service: ReportDetailService;
     constructor(private router: Router, private route: ActivatedRoute) {
-        this.service = new ReportDetailService();
-        this.year = route.snapshot.params['year'];
-        this.weeknum = route.snapshot.params['weeknum'];
-        this.user_id = route.snapshot.params['user_id'];
     }
 
     ngOnInit() {
-        this.detail = this.service.getReportDetail(this.year, this.weeknum, this.user_id);
+        //this.detail = this.service.getReportDetail(this.year, this.weeknum, this.user_id);
+        this.detail = new ReportDetail();
     }
 
     onCloseClick() {

@@ -36,7 +36,7 @@ export class Week {
         return firstDate;
     }
 
-    getLastDate() {
+    getLastDate(): Date {
         let lastDate = new Date(this.year, 0, 1);
         lastDate.setDate(lastDate.getDate() + (this.weeknum - 1) * 7 + 7);
         return lastDate;

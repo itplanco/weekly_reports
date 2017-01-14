@@ -33,5 +33,6 @@ export class IndexComponent implements OnInit {
 
     onCreateReportClick() {
         this.modalWindowShowing = true;
+        this.inputWeek = Week.weekForToday();
     }
 }
