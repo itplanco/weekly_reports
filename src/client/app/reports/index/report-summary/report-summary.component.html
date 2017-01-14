@@ -1,14 +1,39 @@
-<md-list>
-  <md-list-item *ngFor="let summary of summaries" (click)="onDetailClick(summary)">
-    <img md-list-avatar src="{{summary.imageUrl}}" alt="{{summary.name}}">
-    <h3 md-line> {{summary.name}} </h3>
-    <p md-line>
-      <span> {{summary.publishComment}} </span>
-      <span> -- {{summary.publishDateTime|date:"MM/dd/yy"}} </span>
-    </p>
-    <p md-line>
-      <span *ngIf="summary.publishDateTime==null"> 提出済み </span>
-      <span *ngIf="summary.publishDateTime!=null"> 未提出 </span>
-    </p>
-  </md-list-item>
-</md-list>
+<md-card style="margin:20px">
+  <md-card-title>提出済み</md-card-title>
+  <md-card-content>
+    <md-list>
+      <md-list-item *ngFor="let summary of submissionSummaries" (click)="onDetailClick(summary)">
+        <img md-list-avatar src="{{summary.imageUrl}}" alt="{{summary.name}}">
+        <h3 md-line> {{summary.name}} </h3>
+        <p md-line>
+          <span> {{summary.publishComment}} </span>
+          <span> -- {{summary.publishDateTime|date:"MM/dd/yy"}} </span>
+        </p>
+        <!--<p md-line>
+          <span *ngIf="summary.publishDateTime!=null"> 提出済み </span>
+          <span *ngIf="summary.publishDateTime==null"> 未提出 </span>
+        </p>-->
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+  <md-card-title>未提出</md-card-title>
+  <md-card-content>
+    <md-list>
+      <md-list-item *ngFor="let summary of noSubmissionSummaries" (click)="onDetailClick(summary)">
+        <img md-list-avatar src="{{summary.imageUrl}}" alt="{{summary.name}}">
+        <h3 md-line> {{summary.name}} </h3>
+        <p md-line>
+          <span> {{summary.publishComment}} </span>
+          <span> -- {{summary.publishDateTime|date:"MM/dd/yy"}} </span>
+        </p>
+        <!--<p md-line>
+          <span *ngIf="summary.publishDateTime!=null"> 提出済み </span>
+          <span *ngIf="summary.publishDateTime==null"> 未提出 </span>
+        </p>-->
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>

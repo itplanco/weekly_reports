@@ -35,7 +35,8 @@ export class ReportDetailService {
 @Component({
     moduleId: module.id,
     selector: 'wr-report-input',
-    templateUrl: 'report-input.component.html'
+    templateUrl: 'report-input.component.html',
+    styleUrls: ['report-input.component.css']
 })
 export class ReportInputComponent implements OnInit {
     year: Number;

@@ -37,6 +37,7 @@ export class ReportSummaryService {
     moduleId: module.id,
     selector: 'wr-report-summary',
     templateUrl: 'report-summary.component.html',
+    styleUrls: ['report-summary.component.css']
 })
 export class ReportSummaryComponent implements OnChanges {
 
@@ -44,6 +45,8 @@ export class ReportSummaryComponent implements OnChanges {
     @Output() detailSelected: EventEmitter<any> = new EventEmitter();
 
     summaries: ReportSummary[];
+    submissionSummaries: ReportSummary[]=[];
+    noSubmissionSummaries: ReportSummary[]=[];
     private service: ReportSummaryService;
 
     constructor(private router: Router) {
@@ -52,9 +55,22 @@ export class ReportSummaryComponent implements OnChanges {
 
     ngOnChanges() {
         this.summaries = this.service.getWeeklyReportSummaries(this.week);
+        this.createSummaries();
     }
 
     onDetailClick(summary: ReportSummary): void {
         this.detailSelected.emit({ year: this.week.year, weeknum: this.week.weeknum, user_id: summary.user_id });
+    }
+
+    createSummaries(){
+        this.noSubmissionSummaries=[];
+        this.submissionSummaries=[];
+        for(let summary in this.summaries){
+            if(this.summaries[summary].publishDateTime==null){
+                this.noSubmissionSummaries.push(this.summaries[summary]);
+            }else{
+                this.submissionSummaries.push(this.summaries[summary]);
+            }
+        }
     }
 }

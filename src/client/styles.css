@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+* {
+  font-family: "Meiryo"
+}
+
 md-sidenav-layout {
   position: absolute !important;
   width: 100%;

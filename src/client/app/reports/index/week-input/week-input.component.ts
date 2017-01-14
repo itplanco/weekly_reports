@@ -6,6 +6,7 @@ import { Week } from '../../models/week'
     moduleId: module.id,
     selector: 'wr-week-input',
     templateUrl: 'week-input.component.html',
+    styleUrls: ['week-input.component.css']
 })
 export class WeekInputComponent implements OnChanges {
 

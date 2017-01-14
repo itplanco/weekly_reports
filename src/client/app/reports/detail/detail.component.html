@@ -1,14 +1,22 @@
-<div>year: {{year}}</div>
+<div class="detaildate">{{year}}年{{weeknum}}週 ユーザ名：{{detail.userName}}</div>
+<!--<div>year: {{year}}</div>
 <div>weeknum: {{weeknum}}</div>
-<div>user_id: {{user_id}}</div>
+<div>user_id: {{user_id}}</div>-->
 <div>週報詳細</div>
+
 <div>createDate: {{detail.createDate|date:"MM/dd/yy"}}</div>
 <div>userName: {{detail.userName}}</div>
 <div>firstDate: {{detail.firstDate|date:"MM/dd/yy"}}</div>
 <div>lastDate: {{detail.lastDate|date:"MM/dd/yy"}}</div>
+
+
 <div>workArea: {{detail.workArea}}</div>
 <div>workContent: {{detail.workContent}}</div>
 <div>progress: {{detail.progress}}</div>
 <div>problem: {{detail.problem}}</div>
 <div>plans: {{detail.plans}}</div>
 <div>proposal: {{detail.proposal}}</div>
+
+
+<button type="button" (click)="onCloseClick()">閉じる</button>
+<button type="button" (click)="onPublishClick()">提出</button>

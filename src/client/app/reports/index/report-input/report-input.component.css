@@ -1,0 +1,11 @@
+.detaildate{
+    text-align: center;
+}
+
+md-input-container{
+    width: 80%;
+}
+
+textarea{
+    width: 100%;
+}

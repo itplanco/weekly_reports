@@ -1,17 +1,51 @@
-<div>year: {{year}}</div>
-<div>weeknum: {{weeknum}}</div>
-<div>user_id: {{user_id}}</div>
-<div>週報詳細</div>
-<div>createDate: {{detail.createDate|date:"MM/dd/yy"}}</div>
-<div>userName: {{detail.userName}}</div>
-<div>firstDate: {{detail.firstDate|date:"MM/dd/yy"}}</div>
-<div>lastDate: {{detail.lastDate|date:"MM/dd/yy"}}</div>
-<div>workArea: {{detail.workArea}}</div>
-<div>workContent: {{detail.workContent}}</div>
-<div>progress: {{detail.progress}}</div>
-<div>problem: {{detail.problem}}</div>
-<div>plans: {{detail.plans}}</div>
-<div>proposal: {{detail.proposal}}</div>
+<div class="detaildate">{{year}}年{{weeknum}}週 ユーザ名：{{detail.userName}}</div>
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="作業場所" [(ngModel)]="detail.workArea"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="作業内容" [(ngModel)]="detail.workContent"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="進捗状況" [(ngModel)]="detail.progress"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="問題点・改善点" [(ngModel)]="detail.problem"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="来週の予定" [(ngModel)]="detail.plans"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
+
+<md-card style="margin:20px">
+    <md-card-content>
+        <md-input-container>
+            <textarea md-input placeholder="提案・要望" [(ngModel)]="detail.proposal"></textarea>
+        </md-input-container>
+    </md-card-content>
+</md-card>
 
 <button type="button" (click)="onCloseClick()">閉じる</button>
 <button type="button" (click)="onPublishClick()">提出</button>

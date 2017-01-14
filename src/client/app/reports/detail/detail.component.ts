@@ -36,7 +36,8 @@ export class ReportDetailService {
 @Component({
   moduleId: module.id,
   selector: 'wr-report-detail',
-  templateUrl: 'detail.component.html'
+  templateUrl: 'detail.component.html',
+  styleUrls: ['detail.component.css']
 })
 export class DetailComponent implements OnInit {
   year: Number;
@@ -54,4 +55,12 @@ export class DetailComponent implements OnInit {
   ngOnInit() {
     this.detail = this.service.getReportDetail(this.year, this.weeknum, this.user_id);
   }
+
+  onCloseClick() {
+        this.router.navigate(['']);
+    }
+
+    onPublishClick() {
+        this.router.navigate(['']);
+    }
 }

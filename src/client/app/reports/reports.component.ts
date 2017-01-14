@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; 
 
 @Component({
@@ -6,6 +6,9 @@ import { RouterModule, Routes } from '@angular/router';
   templateUrl: 'reports.component.html',
 })
 export class ReportsComponent {
-  
+
+  ngOnInit() {
+    }
+
   
 }

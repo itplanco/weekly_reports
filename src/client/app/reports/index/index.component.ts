@@ -9,6 +9,7 @@ import { Week } from '../models/week'
     moduleId: module.id,
     selector: 'wr-report-index',
     templateUrl: 'index.component.html',
+    styleUrls: ['index.component.css']
 })
 export class IndexComponent implements OnInit {
 

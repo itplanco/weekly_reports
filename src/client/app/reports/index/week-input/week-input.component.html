@@ -1,4 +1,14 @@
-週入力
+<!--週入力
 <p>{{dispDateString}}</p>
 <button type="button" (click)="onLastWeekClick()">前週</button>
-<button type="button" (click)="onNextWeekClick()">次週</button>
+<button type="button" (click)="onNextWeekClick()">次週</button>-->
+
+<button md-button (click)="onLastWeekClick()">
+    <md-icon class="md-18">navigate_before</md-icon>
+</button>
+
+<span>{{dispDateString}}</span>
+
+<button md-button (click)="onNextWeekClick()">
+    <md-icon class="md-18">navigate_next</md-icon>
+</button>

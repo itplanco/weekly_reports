@@ -1,10 +1,15 @@
 <div *ngIf="!modalWindowShowing">
-  <div style="border: medium solid green;height:100px">
-    <wr-week-input [week]="inputWeek" (weekChanged)="onWeekChanged($event)"></wr-week-input>
+  <div style="text-align:center" >
+    <wr-week-input  [week]="inputWeek" (weekChanged)="onWeekChanged($event)"></wr-week-input>
   </div>
-  <div style="border: medium solid red;height:300px">メンバー提出状況一覧
+  <div>
     <wr-report-summary [week]="inputWeek" (detailSelected)="onDetailClick($event)"></wr-report-summary>
   </div>
-  <button type="button" (click)="onCreateReportClick()">新規作成</button>
+  
+  <div class="newreportbutton">
+  <button md-mini-fab (click)="onCreateReportClick()">
+    <md-icon class="md-24">add</md-icon>
+  </button>
+  </div>
 </div>
 <wr-report-input *ngIf="modalWindowShowing" (close)="modalWindowShowing=false" (publish)="modalWindowShowing=false"></wr-report-input>
