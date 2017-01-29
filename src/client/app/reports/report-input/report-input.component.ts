@@ -31,7 +31,7 @@ export class ReportInputComponent implements OnInit {
         }
     }
 
-    onWeekChanged(newWeek: Week) {
+    onWeekSelected(newWeek: Week) {
         this.week = newWeek;
     }
 

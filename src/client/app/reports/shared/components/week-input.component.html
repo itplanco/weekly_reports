@@ -4,15 +4,17 @@
 <button type="button" (click)="onNextWeekClick()">次週</button>-->
 <md-toolbar>
   <span class="week-selector">
-    <button md-icon-button (click)="onLastWeekClick()">
+    <button md-icon-button (click)="onLastWeekClick()" [disabled]="disabled">
       <md-icon class="md-18">navigate_before</md-icon>
     </button>
     <span class="week">
-        {{inputWeek | week}}
-        <small class="from-day-to-day">{{inputWeek | weekFromDayToDay}}</small>
+        {{currentWeek | week}}
+        <small class="from-day-to-day">{{currentWeek | weekFromDayToDay}}</small>
     </span>
-    <button md-icon-button (click)="onNextWeekClick()">
+    <button md-icon-button (click)="onNextWeekClick()" [disabled]="disabled">
       <md-icon class="md-18">navigate_next</md-icon>
     </button>
   </span>
+  <span class="spacer"></span>
+  <button md-button (click)="onThisWeekClick()">今週</button>
 </md-toolbar>

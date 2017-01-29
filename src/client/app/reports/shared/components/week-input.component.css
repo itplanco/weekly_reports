@@ -12,6 +12,10 @@ span {
     vertical-align: -webkit-baseline-middle;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 @media screen and (max-width:600px) {
     .from-day-to-day {
         display: none;

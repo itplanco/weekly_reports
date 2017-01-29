@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FormatWeekPipe } from '../pipes/format-week.pipe';
 import { Week } from '../models/week';
@@ -11,20 +11,23 @@ import { Week } from '../models/week';
 })
 export class WeekInputComponent {
 
-    @Input("week") inputWeek: Week;
-    @Output("weekChanged") inputWeekChange: EventEmitter<Week> = new EventEmitter();
-    @Input("canChange")canChange: boolean;
+    @Input("week") currentWeek: Week;
+    @Output("weekSelected") weekSelected: EventEmitter<Week> = new EventEmitter();
+    @Input("disabled") disabled: boolean;
 
     onLastWeekClick(): void {
-        this.onWeekChange(this.inputWeek.lastWeek());
+        this.onWeekSelect(this.currentWeek.lastWeek());
     }
 
     onNextWeekClick(): void {
-        this.onWeekChange(this.inputWeek.nextWeek());
+        this.onWeekSelect(this.currentWeek.nextWeek());
     }
 
-    private onWeekChange(week: Week) {
-        this.inputWeek = week;
-        this.inputWeekChange.emit(week);
+    onThisWeekClick(): void {
+        this.onWeekSelect(Week.weekForToday());
+    }
+
+    private onWeekSelect(week: Week) {
+        this.weekSelected.emit(week);
     }
 }

@@ -25,7 +25,7 @@ export class ReportDetailComponent implements OnInit {
         this.detail = this.service.getReportDetail(year, weeknum, user_id);
     }
 
-    onWeekChanged(newWeek: Week) {
+    onWeekSelected(newWeek: Week) {
         this.week = newWeek;
     }
 

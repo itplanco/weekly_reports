@@ -34,7 +34,7 @@ export class ReportPublishStatusListComponent implements OnInit {
         this.router.navigate(['/reports/input', this.week.year, this.week.weeknum]);
     }
 
-    onWeekChanged(newWeek: Week) {
+    onWeekSelected(newWeek: Week) {
         this.week = newWeek;
     }
 }
