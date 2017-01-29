@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'; 
+import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -8,7 +8,5 @@ import { RouterModule, Routes } from '@angular/router';
 export class ReportsComponent {
 
   ngOnInit() {
-    }
-
-  
+  }
 }
