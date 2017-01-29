@@ -5,3 +5,10 @@ h1{
 md-grid-list{
     margin: 20px 150px;
 }
+
+.md-fab {
+    display: block;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}

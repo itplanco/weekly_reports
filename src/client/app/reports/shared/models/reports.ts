@@ -5,6 +5,8 @@ export class Report {
 }
 
 export class WeeklyReportPublishStatus extends Report {
+    userName: string;
+    imageUrl: string;
     publishComment: string;
     publishDateTime: Date;
 }

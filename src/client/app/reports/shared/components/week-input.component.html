@@ -2,17 +2,17 @@
 <p>{{dispDateString}}</p>
 <button type="button" (click)="onLastWeekClick()">前週</button>
 <button type="button" (click)="onNextWeekClick()">次週</button>-->
-
-<div>
-    <button md-button (click)="onLastWeekClick()">
-    <md-icon class="md-18">navigate_before</md-icon>
-</button>
-
-    <span>{{inputWeek | week}}</span>
-
-    <button md-button (click)="onNextWeekClick()">
-    <md-icon class="md-18">navigate_next</md-icon>
-</button>
-</div>
-
-<p>{{startDate|date:('yyyy年M月d日')}} ～ {{endDate|date:('yyyy年M月d日')}}</p>
+<md-toolbar>
+  <span class="week-selector">
+    <button md-icon-button (click)="onLastWeekClick()">
+      <md-icon class="md-18">navigate_before</md-icon>
+    </button>
+    <span class="week">
+        {{inputWeek | week}}
+        <small class="from-day-to-day">{{inputWeek | weekFromDayToDay}}</small>
+    </span>
+    <button md-icon-button (click)="onNextWeekClick()">
+      <md-icon class="md-18">navigate_next</md-icon>
+    </button>
+  </span>
+</md-toolbar>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ReportDetail, ReportsService } from '../shared';
+import { FormatWeekFromDayToDayPipe } from '../shared';
+import { Week, ReportDetail, ReportsService } from '../shared';
 
 @Component({
     moduleId: module.id,
@@ -10,7 +11,7 @@ import { ReportDetail, ReportsService } from '../shared';
     styleUrls: ['report-input.component.css']
 })
 export class ReportInputComponent implements OnInit {
-    user: any;
+    week: Week;
     detail: ReportDetail;
 
     constructor(private router: Router, private route: ActivatedRoute, private service: ReportsService) {
@@ -19,6 +20,7 @@ export class ReportInputComponent implements OnInit {
     ngOnInit() {
         var year = this.route.snapshot.params['year'];
         var weeknum = this.route.snapshot.params['weeknum'];
+        this.week = new Week(year, weeknum);
         var user_id = 1;
         this.detail = this.service.getReportDetail(year, weeknum, user_id);
         if (!this.detail) {
@@ -27,6 +29,10 @@ export class ReportInputComponent implements OnInit {
             this.detail.weeknum = weeknum;
             this.detail.user_id = user_id;
         }
+    }
+
+    onWeekChanged(newWeek: Week) {
+        this.week = newWeek;
     }
 
     onCloseClick() {

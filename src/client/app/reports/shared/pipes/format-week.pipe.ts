@@ -7,7 +7,7 @@ import { Week } from '../models/week';
 })
 export class FormatWeekPipe implements PipeTransform {
 
-  transform(value: Week): any {
+  transform(value: Week): string {
     return value.year + '年' + value.weeknum + '週';
   }
 

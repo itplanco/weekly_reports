@@ -10,7 +10,7 @@ import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { ReportInputComponent } from './report-input/report-input.component';
 
 import { WeekInputComponent } from './shared/components';
-import { FormatWeekPipe, PublishedFilterPipe, UnpublishedFilterPipe } from './shared/pipes';
+import { FormatWeekPipe, FormatWeekFromDayToDayPipe, PublishedFilterPipe, UnpublishedFilterPipe } from './shared/pipes';
 import { ReportsService } from './shared/services';
 
 @NgModule({
@@ -27,6 +27,7 @@ import { ReportsService } from './shared/services';
         ReportInputComponent,
         WeekInputComponent,
         FormatWeekPipe,
+        FormatWeekFromDayToDayPipe,
         PublishedFilterPipe,
         UnpublishedFilterPipe
     ],

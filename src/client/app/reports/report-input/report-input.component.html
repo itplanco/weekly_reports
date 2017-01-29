@@ -1,4 +1,5 @@
-<div class="detaildate">{{year}}年{{weeknum}}週</div>
+<wr-week-input [week]="week" (weekChanged)="onWeekChanged($event)"></wr-week-input>
+
 <md-card style="margin:20px">
     <md-card-content>
         <md-input-container>

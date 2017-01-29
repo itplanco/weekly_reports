@@ -29,6 +29,8 @@ export class ReportsService {
                 year: week.year,
                 weeknum: week.weeknum,
                 user_id: 1,
+                userName: '',
+                imageUrl: '',
                 publishComment: null,
                 publishDateTime: null
             },
@@ -36,6 +38,8 @@ export class ReportsService {
                 year: week.year,
                 weeknum: week.weeknum,
                 user_id: 2,
+                userName: '',
+                imageUrl: '',
                 publishComment: 'ていしゅつします',
                 publishDateTime: (new Date())
             }

@@ -1,4 +1,19 @@
-span{
-    font-size: 24px;
+span {
+    vertical-align: baseline;
+}
+
+.week-selector {
+    display: inline-block;
     vertical-align: -webkit-baseline-middle;
+}
+
+.week, button {
+    display: inline-block;
+    vertical-align: -webkit-baseline-middle;
+}
+
+@media screen and (max-width:600px) {
+    .from-day-to-day {
+        display: none;
+    }
 }
