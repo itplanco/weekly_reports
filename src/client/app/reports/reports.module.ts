@@ -7,7 +7,9 @@ import { ReportPublishStatusListComponent } from './report-publish-status-list/r
 import { ReportDetailComponent } from './report-detail/report-detail.component';
 import { ReportInputComponent } from './report-input/report-input.component';
 
-import { ReportsService } from './services/';
+import { WeekInputComponent } from './shared/components';
+import { FormatWeekPipe, PublishedFilterPipe, UnpublishedFilterPipe } from './shared/pipes';
+import { ReportsService } from './shared/services';
 
 @NgModule({
     imports: [
@@ -18,7 +20,11 @@ import { ReportsService } from './services/';
     declarations: [
         ReportPublishStatusListComponent,
         ReportDetailComponent,
-        ReportInputComponent
+        ReportInputComponent,
+        WeekInputComponent,
+        FormatWeekPipe,
+        PublishedFilterPipe,
+        UnpublishedFilterPipe
     ],
     exports: [
         ReportPublishStatusListComponent,

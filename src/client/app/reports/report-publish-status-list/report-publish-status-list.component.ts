@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Week, WeeklyReportPublishStatus } from '../models/';
-import { ReportsService } from '../services/';
+import { WeekInputComponent } from '../shared';
+import { PublishedFilterPipe, UnpublishedFilterPipe } from '../shared';
+import { Week, WeeklyReportPublishStatus } from '../shared/';
+import { ReportsService } from '../shared';
 
 @Component({
-    selector: 'app-report-publish-status-list',
+    moduleId: module.id,
+    selector: 'wr-report-publish-status-list',
+    viewProviders: [
+        WeekInputComponent,
+        PublishedFilterPipe,
+        UnpublishedFilterPipe
+    ],
     templateUrl: './report-publish-status-list.component.html',
     styleUrls: ['./report-publish-status-list.component.css']
 })

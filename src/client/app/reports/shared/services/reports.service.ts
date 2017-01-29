@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Report, ReportDetail, WeeklyReportPublishStatus, Week } from '../models/';
+import { Report, ReportDetail, WeeklyReportPublishStatus } from '../models/reports';
+import { Week } from '../models/week';
 
 @Injectable()
 export class ReportsService {

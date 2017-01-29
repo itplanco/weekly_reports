@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ReportDetail } from '../models/';
-import { ReportsService } from '../services';
+import { ReportDetail, ReportsService } from '../shared';
 
 @Component({
     moduleId: module.id,
-    selector: 'app-report-input',
+    selector: 'wr-report-input',
     templateUrl: 'report-input.component.html',
     styleUrls: ['report-input.component.css']
 })
