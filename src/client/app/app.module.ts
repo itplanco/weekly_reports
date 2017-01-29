@@ -25,6 +25,6 @@ import { SidenavMenuComponent } from './common/sidenav-menu.component';
     ReportsModule
   ],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
