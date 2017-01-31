@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "lint": "tslint \"**/*.ts\"",
     "test": "ng test"
   },

@@ -33,7 +33,16 @@ class Router {
                 
                 // パラメーターを設定
                 if ($request->param) {
-                    $route->param['data'] = $request->param;
+                    $route->param = $request->param;
+                    foreach ($request->param as $key => $value) {
+                        $route->data[$key] = $value;
+                    }
+                }
+
+                if ($request->body) {
+                    foreach ($request->body as $key => $value) {
+                        $route->data[$key] = $value;
+                    }
                 }
                 return $route;
             }

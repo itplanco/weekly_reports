@@ -15,9 +15,7 @@ class AuthService {
                 "success" => TRUE
             ];
         } else {
-            return (object) [
-                "success" => FALSE
-            ];
+            return "ユーザー名またはパスワードが違います";
         }
     }
 

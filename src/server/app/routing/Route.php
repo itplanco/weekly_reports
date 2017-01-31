@@ -5,6 +5,7 @@ class Route {
     public $controller;
     public $action;
     public $param;
+    public $data;
     
     function executeControllerAction() {
         $controller = new $this->controller;
@@ -14,7 +15,11 @@ class Route {
         $methodInfo = new ReflectionMethod($this->controller, $action);
         $paramArgs = [];
         foreach($methodInfo->getParameters() as $param) {
-            $paramArgs[] = $this->param[$param->name];
+            if(isset($this->param[$param->name])) {
+                $paramArgs[] = $this->param[$param->name];
+            } else {
+                $paramArgs[] = $this->data[$param->name];
+            }
         }
         return $controller->$action(...$paramArgs);
     }
