@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login/';
+import { LoginComponent, LoginGuard } from './login/';
 import { ReportsComponent, ReportPublishStatusListComponent, ReportDetailComponent, ReportInputComponent } from './reports/';
 
 const routes: Routes = [
@@ -10,6 +10,7 @@ const routes: Routes = [
     {
         path: 'reports',
         component: ReportsComponent,
+        canActivate: [LoginGuard],
         children: [
             { path: '', component: ReportPublishStatusListComponent },
             { path: 'input/:year/:weeknum', component: ReportInputComponent },

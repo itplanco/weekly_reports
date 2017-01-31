@@ -8,12 +8,10 @@ import { LoginModule } from './login/login.module';
 import { ReportsModule } from './reports/reports.module';
 
 import { AppComponent } from './app.component';
-import { SidenavMenuComponent } from './common/sidenav-menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SidenavMenuComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
