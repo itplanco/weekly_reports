@@ -1,5 +1,6 @@
 <form (submit)="onSubmit()">
     <md-card [ngStyle]="{ width:'20em', margin: '20px auto'}">
+        <div style="color: red">{{errorMessage}}</div>
         <div>
             <md-input-container [ngStyle]="{ width: '100%' }">
                 <input md-input placeholder="メールアドレス" name="username" type="username" [(ngModel)]="username" required>

@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { LoginService } from './login.service';
+import { LoginService } from './shared/services';
 
 @Component({
     moduleId: module.id,
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
         this.loginService.login(this.username, this.password)
             .subscribe((result) => {
                     if (result) {
-                        this.router.navigate([this.returnUrl]);
+                        this.router.navigate([this.returnUrl || '/']);
                     }
                 },
                 error => {
