@@ -48,15 +48,99 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
 )
 
+IF NOT DEFINED DEPLOYMENT_SERVER_SOURCE (
+  SET DEPLOYMENT_SERVER_SOURCE=%DEPLOYMENT_SOURCE%\src\server
+)
+
+IF NOT DEFINED DEPLOYMENT_CLIENT_SOURCE (
+  SET DEPLOYMENT_CLIENT_SOURCE=%DEPLOYMENT_SOURCE%\src\client
+)
+
+IF NOT DEFINED DEPLOYMENT_CLIENT_DIST (
+  SET DEPLOYMENT_CLIENT_DIST=%DEPLOYMENT_CLIENT_SOURCE%\dist
+)
+
+goto Deployment
+
+:: Utility Functions
+:: -----------------
+
+:SelectNodeVersion
+
+IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
+  :: The following are done only on Windows Azure Websites environment
+  call %KUDU_SELECT_NODE_VERSION_CMD% "%DEPLOYMENT_SOURCE%" "%DEPLOYMENT_TARGET%" "%DEPLOYMENT_TEMP%"
+  IF !ERRORLEVEL! NEQ 0 goto error
+
+  IF EXIST "%DEPLOYMENT_TEMP%\__nodeVersion.tmp" (
+    SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
+    IF !ERRORLEVEL! NEQ 0 goto error
+  )
+  
+  IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
+    SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
+    IF !ERRORLEVEL! NEQ 0 goto error
+  )
+
+  IF NOT DEFINED NODE_EXE (
+    SET NODE_EXE=node
+  )
+
+  SET NPM_CMD="!NODE_EXE!" "!NPM_JS_PATH!"
+) ELSE (
+  SET NPM_CMD=npm
+  SET NODE_EXE=node
+)
+
+goto :EOF
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
 
-echo Handling Basic Web Site deployment.
+:Deployment
+echo Handling server deployment.
+:: 1. Copy files to temp
+IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
+  pushd "%DEPLOYMENT_SERVER_SOURCE%"
+  call :ExecuteCmd xcopy * %DEPLOYMENT_TEMP% /E /Y /Q
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
 
+echo Handling client deployment.
+
+:: 1. Select node version
+call :SelectNodeVersion
+
+:: 2. Install npm packages
+IF EXIST "%DEPLOYMENT_CLIENT_SOURCE%\package.json" (
+  pushd "%DEPLOYMENT_CLIENT_SOURCE%"
+  call :ExecuteCmd !NPM_CMD! install
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
+
+:: 3. Build target
+IF EXIST "%DEPLOYMENT_CLIENT_SOURCE%\node_modules" (
+  pushd "%DEPLOYMENT_CLIENT_SOURCE%"
+  call :ExecuteCmd !NPM_CMD! run build
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
+
+:: 4. Copy dist to temp
+IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
+  pushd "%DEPLOYMENT_CLIENT_DIST%"
+  call :ExecuteCmd xcopy * %DEPLOYMENT_TEMP%\public /E /Y /Q
+  IF !ERRORLEVEL! NEQ 0 goto error
+  popd
+)
+
+echo Copy temporary files to target.
 :: 1. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
